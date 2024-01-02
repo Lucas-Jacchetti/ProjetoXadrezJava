@@ -1,12 +1,14 @@
 package chesSystem.chess;
 
 import chesSystem.boardgame.Board;
+import chesSystem.boardgame.Position;
 
 public class ChessMatch {
     private Board board;
 
     public ChessMatch(){
         board = new Board(8,8);
+        inicialSetup();
     }
     public ChessPiece[][] getPieces(){
         ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()];
@@ -16,5 +18,11 @@ public class ChessMatch {
             }
         }
         return mat;
+    }
+
+    private void inicialSetup(){
+        board.placePiece(new Rook(board, Color.WHITE), new Position(2, 1));
+        board.placePiece(new King(board, Color.WHITE), new Position(0, 4));
+   
     }
 }
