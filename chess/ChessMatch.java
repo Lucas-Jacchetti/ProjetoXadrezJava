@@ -1,5 +1,7 @@
 package chesSystem.chess;
 
+import chesSystem.ChessPieces.King;
+import chesSystem.ChessPieces.Rook;
 import chesSystem.boardgame.Board;
 import chesSystem.boardgame.Piece;
 import chesSystem.boardgame.Position;
@@ -25,6 +27,7 @@ public class ChessMatch {
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
         validadeSourcePosition(source);
+        valiadeTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
         return (ChessPiece)capturedPiece;
     }
@@ -35,6 +38,12 @@ public class ChessMatch {
         }
         if (!board.piece(position).isThereAnyPossibleMoves()) {
             throw new ChessException("Erro, não existem movimentos possiveis para a peça de origem--");
+        }
+    }
+
+    private void valiadeTargetPosition(Position source, Position target){
+        if (!board.piece(source).possibleMove(target)) {
+            throw new ChessException("Erro, A peça de origem nao pode se mover para o local do destino--");
         }
     }
 
