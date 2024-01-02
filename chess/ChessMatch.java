@@ -1,6 +1,8 @@
 package chesSystem.chess;
 
 import chesSystem.boardgame.Board;
+import chesSystem.boardgame.Piece;
+import chesSystem.boardgame.Position;
 
 public class ChessMatch {
     private Board board;
@@ -18,6 +20,29 @@ public class ChessMatch {
         }
         return mat;
     }
+
+    public ChessPiece performChessPiece(ChessPosition sourcePosition, ChessPosition targetPosition){
+        Position source = sourcePosition.toPosition();
+        Position target = targetPosition.toPosition();
+        validadeSourcePosition(source);
+        Piece capturedPiece = makeMove(source, target);
+        return (ChessPiece)capturedPiece;
+    }
+
+    private void validadeSourcePosition(Position position){
+        if(!board.thereIsAPiece(position)){
+            throw new ChessException("Não ha peça na posição de origem");
+        }
+    }
+
+    private Piece makeMove(Position source, Position target){
+        Piece p = board.removePiece(source);
+        Piece capturedPiece = board.removePiece(target);
+        board.placePiece(p, target);
+        return capturedPiece;
+    }
+
+
     private void placeNewPiece(char column, int row, ChessPiece piece){
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
     }
