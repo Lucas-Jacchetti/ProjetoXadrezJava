@@ -1,5 +1,8 @@
 package chesSystem.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import chesSystem.ChessPieces.King;
 import chesSystem.ChessPieces.Rook;
 import chesSystem.boardgame.Board;
@@ -10,6 +13,9 @@ public class ChessMatch {
     private Board board;
     private int turn;
     private Color currentPlayer;
+
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
+    private List<Piece> capturedChessPieces = new ArrayList<>();
 
     public ChessMatch(){
         board = new Board(8,8);
@@ -79,6 +85,12 @@ public class ChessMatch {
         Piece p = board.removePiece(source);
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
+
+        if (capturedPiece != null) {
+           piecesOnTheBoard.remove(capturedPiece);
+            capturedChessPieces.add(capturedPiece);
+        }
+
         return capturedPiece;
     }
 
@@ -91,6 +103,8 @@ public class ChessMatch {
 
     private void placeNewPiece(char column, int row, ChessPiece piece){
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
+        piecesOnTheBoard.add(piece);
+    
     }
     private void inicialSetup(){
         placeNewPiece('c', 1, new Rook(board, Color.WHITE));
