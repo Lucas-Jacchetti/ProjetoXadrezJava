@@ -1,5 +1,6 @@
 package chesSystem.chess;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class ChessMatch {
     private boolean check;
     private boolean checkMate;
     private ChessPiece enPassantVunerable;
+    private ChessPiece promoted;
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedChessPieces = new ArrayList<>();
@@ -35,6 +37,10 @@ public class ChessMatch {
 
     public boolean getCheck(){
         return check;
+    }
+
+    public ChessPiece getPromoted(){
+        return promoted;
     }
 
     public boolean getCheckMate(){
@@ -88,6 +94,16 @@ public class ChessMatch {
 
         ChessPiece movedPiece = (ChessPiece)board.piece(target);
 
+        //promoção
+        promoted = null;
+        if (movedPiece instanceof Pawn) {
+            if (movedPiece.getColor() == Color.WHITE && target.getRow() == 0 || movedPiece.getColor() == Color.BLACK && target.getRow() == 0) {
+                promoted = (ChessPiece)board.piece(target);
+                promoted = replacePromotedPiece("D");
+            }
+        }
+
+
         check = (testCheck(opponent(currentPlayer))) ? true : false;
 
         if (testCheckMate(opponent(currentPlayer))) {
@@ -105,6 +121,34 @@ public class ChessMatch {
         return (ChessPiece)capturedPiece;
         
     }
+
+
+    public ChessPiece replacePromotedPiece(String type){
+        if (promoted == null) {
+            throw new IllegalStateException("Erro, Não ha peça para ser promovida--");
+
+        }
+        if (!type.equals("B") && !type.equals("T") && !type.equals("C") && !type.equals("D")  ) {
+            throw new InvalidParameterException("Erro, tipo inválido para parêmetro--");     
+        }
+
+        Position pos = promoted.getChessPosition().toPosition();
+        Piece p = board.removePiece(pos);
+        piecesOnTheBoard.remove(p);
+
+        ChessPiece newPiece = newPiece(type, promoted.getColor());
+        board.placePiece(newPiece, pos);
+        piecesOnTheBoard.add(newPiece);
+        return newPiece;
+
+    }
+    private ChessPiece newPiece(String type, Color color){
+        if (type.equals("B")) return new Bishop(board, color);
+        if (type.equals("C")) return new Knight(board, color);
+        if (type.equals("T")) return new Rook(board, color);    
+        return new Queen(board, color);
+    }
+
 
     private void validadeSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
