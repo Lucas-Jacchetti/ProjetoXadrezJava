@@ -1,10 +1,7 @@
 package chesSystem.ChessPieces;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 import chesSystem.boardgame.Board;
-import chesSystem.boardgame.Piece;
 import chesSystem.boardgame.Position;
 import chesSystem.chess.ChessMatch;
 import chesSystem.chess.ChessPiece;

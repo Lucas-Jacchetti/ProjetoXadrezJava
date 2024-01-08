@@ -1,6 +1,5 @@
 package chesSystem.chess;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -129,7 +128,7 @@ public class ChessMatch {
 
         }
         if (!type.equals("B") && !type.equals("T") && !type.equals("C") && !type.equals("D")  ) {
-            throw new InvalidParameterException("Erro, tipo inválido para parêmetro--");     
+            return promoted;     
         }
 
         Position pos = promoted.getChessPosition().toPosition();
