@@ -1,10 +1,10 @@
-package chesSystem.ChessPieces;
+package ChessPieces;
 
-import chesSystem.boardgame.Board;
-import chesSystem.boardgame.Position;
-import chesSystem.chess.ChessMatch;
-import chesSystem.chess.ChessPiece;
-import chesSystem.chess.Color;
+import boardgame.Board;
+import boardgame.Position;
+import chess.ChessMatch;
+import chess.ChessPiece;
+import chess.Color;
 
 public class Pawn extends ChessPiece {
 

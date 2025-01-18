@@ -1,4 +1,4 @@
-package chesSystem.chess;
+package chess;
 
 public enum Color {
     BLACK,

@@ -1,4 +1,4 @@
-package chesSystem.boardgame;
+package boardgame;
 
 public class Board {
     private int rows;
